@@ -8,6 +8,11 @@
 
 load("@prelude//:paths.bzl", "paths")
 load(
+    "@prelude//:resources.bzl",
+    "ResourceInfo",
+    "gather_resources",
+)
+load(
     "@prelude//android:android_providers.bzl",
     "merge_android_packageable_info",
 )
@@ -944,6 +949,11 @@ def prebuilt_cxx_library_impl(ctx: AnalysisContext) -> list[Provider]:
         default_output = output,
         sub_targets = sub_targets,
     ))
+
+    providers.append(ResourceInfo(resources = gather_resources(
+        label = ctx.label,
+        deps = first_order_deps + exported_first_order_deps,
+    )))
 
     return providers
 

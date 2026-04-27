@@ -14,6 +14,7 @@
 load("@prelude//:attrs_validators.bzl", "validation_common")
 load("@prelude//apple:apple_common.bzl", "apple_common")
 load("@prelude//cxx:cuda.bzl", "CudaCompileStyle")
+load("@prelude//cxx:cxx_types.bzl", "LinkPreference")
 load("@prelude//cxx:headers.bzl", "CPrecompiledHeaderInfo")
 load("@prelude//cxx:link_groups_types.bzl", "LINK_GROUP_MAP_ATTR")
 load("@prelude//decls:core_rules.bzl", "core_args")
@@ -58,6 +59,7 @@ def _cxx_binary_and_test_attrs():
         "exported_needs_coverage_instrumentation": attrs.bool(default = False),
         "extra_dwp_flags": attrs.list(attrs.string(), default = []),
         "link_execution_preference": link_execution_preference_attr(),
+        "link_preference": attrs.enum(LinkPreference.values(), default = "full"),
         "link_group_map": LINK_GROUP_MAP_ATTR,
         "link_group_min_binary_node_count": attrs.option(attrs.int(), default = None),
         "link_ordering": attrs.option(attrs.enum(LinkOrdering.values()), default = None),

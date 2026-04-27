@@ -128,6 +128,7 @@ load(
     "CxxRuleConstructorParams",
     "CxxRuleProviderParams",
     "CxxRuleSubTargetParams",
+    "LinkPreference",
 )
 load(":gcno.bzl", "GcnoFilesInfo")
 load(
@@ -336,6 +337,7 @@ def cxx_binary_impl(ctx: AnalysisContext) -> list[Provider]:
         coverage_profile_list = ctx.attrs.coverage_profile_list[DefaultInfo].default_outputs[0] if ctx.attrs.coverage_profile_list else None,
         separate_debug_info = ctx.attrs.separate_debug_info,
         cuda_compile_style = CudaCompileStyle(ctx.attrs.cuda_compile_style),
+        link_preference = LinkPreference(ctx.attrs.link_preference),
     )
     output = cxx_executable(ctx, params)
 
@@ -994,6 +996,7 @@ def cxx_test_impl(ctx: AnalysisContext) -> list[Provider]:
         coverage_profile_list = ctx.attrs.coverage_profile_list[DefaultInfo].default_outputs[0] if ctx.attrs.coverage_profile_list else None,
         separate_debug_info = ctx.attrs.separate_debug_info,
         cuda_compile_style = CudaCompileStyle(ctx.attrs.cuda_compile_style),
+        link_preference = LinkPreference(ctx.attrs.link_preference),
     )
     output = cxx_executable(ctx, params, is_cxx_test = True)
 

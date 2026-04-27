@@ -11,6 +11,8 @@ load(
     "@prelude//cxx:cuda.bzl",
     "CudaCompileStyle",
 )
+
+LinkPreference = enum("full", "incremental")
 load(
     "@prelude//cxx:cxx_toolchain_types.bzl",
     "RuntimeDependencyHandling",  # @unused Used as a type
@@ -294,6 +296,7 @@ CxxRuleConstructorParams = record(
     separate_debug_info = field(bool, False),
     # Cuda compile stype
     cuda_compile_style = field(CudaCompileStyle | None, None),
+    link_preference = field(LinkPreference, LinkPreference("full")),
     supports_stripping = field(bool, True),
     # Whether to set expect_eligible_for_dedupe on compile actions.
     expect_eligible_for_dedupe = field(bool, False),

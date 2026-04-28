@@ -59,7 +59,7 @@ def _cxx_binary_and_test_attrs():
         "exported_needs_coverage_instrumentation": attrs.bool(default = False),
         "extra_dwp_flags": attrs.list(attrs.string(), default = []),
         "link_execution_preference": link_execution_preference_attr(),
-        "link_preference": attrs.enum(LinkPreference.values(), default = "full"),
+        "link_preference": attrs.enum(LinkPreference.values(), default = "default"),
         "link_group_map": LINK_GROUP_MAP_ATTR,
         "link_group_min_binary_node_count": attrs.option(attrs.int(), default = None),
         "link_ordering": attrs.option(attrs.enum(LinkOrdering.values()), default = None),

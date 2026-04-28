@@ -33,6 +33,7 @@ load(
 )
 load(
     "@prelude//cxx:cxx_toolchain_types.bzl",
+    "IncrementalLinkingMode",
     "LinkerType",
     "PicBehavior",
     "RuntimeDependencyHandling",
@@ -724,10 +725,13 @@ def cxx_executable(ctx: AnalysisContext, impl_params: CxxRuleConstructorParams, 
             LinkArgs(flags = cmd_args(hidden = impl_params.extra_hidden)),
         )
 
-    incremental_link = (
-        impl_params.link_preference == LinkPreference("incremental") and
-        linker_info.type == LinkerType("windows")
-    )
+    incremental_linking_mode = IncrementalLinkingMode(linker_info.incremental_linking)
+    if impl_params.link_preference == LinkPreference("incremental"):
+        incremental_link = incremental_linking_mode != IncrementalLinkingMode("disabled")
+    elif impl_params.link_preference == LinkPreference("full"):
+        incremental_link = False
+    else:
+        incremental_link = incremental_linking_mode == IncrementalLinkingMode("enabled")
 
     link_result = _link_into_executable(
         ctx,

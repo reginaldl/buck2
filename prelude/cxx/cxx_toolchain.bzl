@@ -20,6 +20,7 @@ load(
     "CxxObjectFormat",
     "DepTrackingMode",
     "HipCompilerInfo",
+    "IncrementalLinkingMode",
     "LinkerInfo",
     "LinkerType",
     "ObjcCompilerInfo",
@@ -185,6 +186,7 @@ def cxx_toolchain_impl(ctx):
         thin_lto_double_codegen_enabled = ctx.attrs.thin_lto_double_codegen_enabled,
         type = linker_type,
         use_archiver_flags = ctx.attrs.use_archiver_flags,
+        incremental_linking = ctx.attrs.incremental_linking,
         supports_content_based_paths_for_archiving = ctx.attrs.supports_content_based_paths_for_archiving,
         supports_shared_libraries = ctx.attrs.supports_shared_libraries,
     )
@@ -326,6 +328,7 @@ def cxx_toolchain_extra_attributes(is_toolchain_rule):
         "supports_content_based_paths": attrs.bool(default = False),
         "supports_content_based_paths_for_archiving": attrs.bool(default = False),
         "supports_distributed_thinlto": attrs.bool(default = False),
+        "incremental_linking": attrs.enum(IncrementalLinkingMode.values(), default = "disabled"),
         "supports_shared_libraries": attrs.bool(default = True),
         "supports_two_phase_compilation": attrs.bool(default = False),
         "thin_lto_double_codegen_enabled": attrs.bool(default = False),
